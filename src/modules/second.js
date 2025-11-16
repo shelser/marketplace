@@ -1,6 +1,13 @@
+import getData from "./getData.js";
+import postData from "./postdata.js";
+
 const second = () => {
   const cartBtn = document.getElementById('cart');
-  console.log('hi'); 
+
+  getData()
+      .then((data) => {
+        console.log(data);
+      });
 };
 
 export default second;
