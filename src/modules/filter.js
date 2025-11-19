@@ -17,6 +17,12 @@ export const priceFilter = (goods, min, max) => {
   return goods.filter((goodsItem) => goodsItem.price > min && goodsItem.price < max);
 };
 
-export const saleFilter = (goods) => {
-  return goods.filter(good => good.sale);
+export const saleFilter = (goods, value) => {
+  return goods.filter((goodItem) => {
+    if (value) {
+      return goodItem.sale === true
+    } else {
+      return goodItem
+    }
+  });
 };

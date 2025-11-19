@@ -8,52 +8,26 @@ const price = () => {
   const maxPrice = document.getElementById('max');
   const rangePrice = document.querySelectorAll('.filter-price_range input');
   const saleBtn = document.querySelector('.filter-check_checkmark');
-  const checkStyle = document.createElement('style');
-  document.head.appendChild(checkStyle);
-  const style = document.querySelector('head style');
+  const checkboxInput = document.getElementById('discount-checkbox')
 
-  let isCheck = false;
-
-  const saleGoods = () => {
-    getData()
-    .then((data) => {
-      renderGoods(saleFilter(data));
-    }); 
-  };
-
-  saleBtn.addEventListener('click', () => {
-    isCheck = !isCheck;
-    if (isCheck) {
-      style.textContent = `
-        .filter-check_checkmark::after {
-          display: block !important;
-        }
-      `;
-      saleGoods(); 
-      rangePrice.forEach(input => input.value = ''); //сбрасываем инпут после изменения sale
+  checkboxInput.addEventListener('change', () => {
+    if (checkboxInput.checked) {
+      saleBtn.classList.add('checked');
     } else {
-      style.textContent = ''
-      getData()
-      .then((data) => {
-        renderGoods(data);
-      });
-      rangePrice.forEach(input => input.value = ''); //сбрасываем инпут после изменения sale   
+      saleBtn.classList.remove('checked');
     }
-  })
+    getData()
+      .then((data) => {   
+        renderGoods(priceFilter(saleFilter(data, checkboxInput.checked), minPrice.value, maxPrice.value));
+      });
+  });
 
   rangePrice.forEach((price) => {
     price.addEventListener('input', () => {
-      if (isCheck) {
-        getData()
-        .then((data) => {
-          renderGoods(priceFilter(saleFilter(data), minPrice.value, maxPrice.value));
-        });
-      } else {
-        getData()
-        .then((data) => {
-          renderGoods(priceFilter(data, minPrice.value, maxPrice.value));
-        });
-      } 
+      getData()
+      .then((data) => {
+        renderGoods(priceFilter(saleFilter(data, checkboxInput.checked), minPrice.value, maxPrice.value));
+      })
     });
   });
 };

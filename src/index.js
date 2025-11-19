@@ -4,8 +4,9 @@ import search from "./modules/search.js";
 import catalog from "./modules/catalog.js";
 import price from "./modules/price.js";
 
+
 cart();
 load();
 search();
 catalog();
-price()
+price();
